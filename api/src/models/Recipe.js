@@ -73,32 +73,6 @@ module.exports = (sequelize) => {
         }
       }
     },
-    servings: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isInt: {
-          args: true,
-          msg: 'Servings must be an integer',
-        },
-        min: {
-          args: 1,
-          msg: 'Servings must be greater than or 1',
-        },
-        max: {
-          args: 100,
-          msg: 'Servings must be less than or equal 100',
-        }
-      }
-    },
-    readyInMinutes: {
-      type: DataTypes.FLOAT,
-      validate: {
-        isFloat: {
-          args: true,
-          msg: 'readyInMinutes must be a float',
-        }
-      },
-    },
     image: {
       type: DataTypes.STRING,
       validate: {

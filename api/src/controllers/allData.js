@@ -1,11 +1,11 @@
-const apiData = require('./apiData');
-const dbData = require('./dbData');
+const getApiData = require('./apiData');
+const getDbData = require('./dbData');
 
-const allRecipes = async() => {
-    const apiInfo = await apiData();
-    const dbInfo = await dbData();
+const getAllRecipes = async() => {
+    const apiInfo = await getApiData();
+    const dbInfo = await getDbData();
     const allInfo = apiInfo.concat(dbInfo);
     return allInfo;
 }
 
-module.exports = allRecipes;
+module.exports = getAllRecipes;

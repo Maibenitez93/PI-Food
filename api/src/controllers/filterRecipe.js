@@ -1,7 +1,7 @@
-const allRecipes = require('./allData');
+const getAllRecipes = require('./allData');
 
 const foundName = async (name) => {
-    const allRecipes = await allRecipes();
+    const allRecipes = await getAllRecipes();
    
     let filteredName = await allRecipes.filter((e) => {
         e.name.toLowerCase().includes(name.toLowerCase());

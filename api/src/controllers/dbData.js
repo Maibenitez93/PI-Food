@@ -1,10 +1,9 @@
-const Recipe = require('../models/Recipe');
-const Diet  = require('../models/TypeDiet');
+const { Recipe, TypeDiet } = require('../db.js');
 
-const dbData = async () => {
+const getDbData = async () => {
     const dbInfo = await Recipe.findAll({
         include: {
-            model: Diet,
+            model: TypeDiet,
             attributes: ['id','name'],
             through: {
                 attributes: []
@@ -14,4 +13,4 @@ const dbData = async () => {
     return dbInfo;
 }
 
-module.exports = dbData;
+module.exports = getDbData;

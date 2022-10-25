@@ -1,19 +1,20 @@
-const api = process.env.API_KEY;
+const { API_KEY } = process.env;
 const axios = require('axios');
 
-const apiData = async (req, res) => {
-    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api}&number=30&addRecipeInformation=true`);
-    const apiInfo = await apiUrl.data.map(e => {
+const getApiData = async () => {
+    const apiUrl = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=30&addRecipeInformation=true`);
+    console.log()
+    const apiInfo = await apiUrl.data.results.map(e => {
         return {
             id: e.id,
-            title: e.title,
+            name: e.title,
             summary: e.summary,
             healthScore: e.healthScore,
-            instructions: e.analyzedInstructions,
+            instructions: e.analyzedInstructions.map(e => e.steps).flat(Infinity),
             image: e.image
         }
     });
     return apiInfo; 
 };
 
-module.exports = apiData;
+module.exports = getApiData;

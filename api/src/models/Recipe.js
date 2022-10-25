@@ -3,15 +3,11 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define('recipe', {
+  sequelize.define('Recipe', {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
-      validate: {
-        isUUID: 4,
-        msg: 'Id must be a valid UUID',
-      }
     },
     title: {
       type: DataTypes.STRING,
@@ -40,10 +36,6 @@ module.exports = (sequelize) => {
           args:true,
           msg: 'Summary is required',
         },
-        isInt: {
-          args: true,
-          msg: 'Summary must be only numbers',
-        }
       }
     },
     healthScore: {
@@ -66,21 +58,9 @@ module.exports = (sequelize) => {
     },
     instructions: {
       type: DataTypes.TEXT,
-      validate: {
-        is: {
-          args: ["^[a-z]+$",'i'],
-          msg: 'Instructiones must be with caracteres'
-        }
-      }
     },
     image: {
       type: DataTypes.STRING,
-      validate: {
-        is: {
-          args: ["^[a-z]+$",'i'],
-          msg: 'Image must be with caracteres'
-        }
-      }
     },
     createdInDb: {
       type: DataTypes.BOOLEAN,

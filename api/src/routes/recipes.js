@@ -17,8 +17,9 @@ const getApiData = async () => {
           dishTypes: e.dishTypes.map(e => e),
           summary: e.summary,
           healthScore: e.healthScore,
-          instructions: e.analyzedInstructions.map(e => e.steps).flat(Infinity),
+          instructions: e.analyzedInstructions.map(e => e.steps.map(e => e.step)).flat(),
           image: e.image,
+          diets: e.diets.map(e => e),
       }
   });
   return apiInfo; 
@@ -48,6 +49,7 @@ const getAllRecipes = async() => {
 router.get("/", async (req, res) => {
   const { name } = req.query;
   const allRecipes = await getAllRecipes();
+
   if (name) {
     const recipesName = allRecipes.filter((e) =>
       e.name.toLowerCase().includes(name.toLowerCase())
@@ -60,26 +62,43 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const allRecipes = await getAllRecipes();
+
+  if(id) {
+    const recipeId = allRecipes.find((e) => e.id == id);
+  
+    recipeId
+    ? res.status(200).send(recipeId)
+    : res.status(404).send("Recipe not found");
+  }
+});
+
 router.post("/", async (req, res) => {
+
   const {
     title,
     summary,
     healthScore,
     instructions,
-    image,
     dishTypes,
-    createdInDb,
+    image,
     diets,
   } = req.body;
+  console.log(req.body)
+
+  if(!title || !summary) { 
+    return res.json({msg: 'Title and summary are required'})
+  }
 
   const recipeCreated = await Recipe.create({
     title,
     summary,
     healthScore,
     instructions,
-    image,
     dishTypes,
-    createdInDb,
+    image,
   });
 
   const dietsDb = await TypeDiet.findAll({
@@ -88,8 +107,8 @@ router.post("/", async (req, res) => {
     },
   });
 
-  recipeCreated.addTypeDiets(dietsDb);
-  res.status(200).send("Recipe created");
+  await recipeCreated.addTypeDiets(dietsDb);
+  res.json("Recipe created successfully");
 });
 // router.post('/', async (req, res) => {
 //     res.send('Post new recipes');
@@ -115,7 +134,7 @@ router.get("/:id", async (req, res) => {
   
     recipeId
     ? res.status(200).send(recipeId)
-    : res.status(404).send("No recipe found");
+    : res.status(404).send("Recipe not found");
   }
 });
 

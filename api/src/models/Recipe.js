@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  sequelize.define(
+  return sequelize.define(
     "Recipe",
     {
       id: {
@@ -65,7 +65,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       dishTypes: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
       },
       createdInDb: {
         type: DataTypes.BOOLEAN,

@@ -2,7 +2,7 @@ const { getAllRecipes } = require('./data-controller');
 
 
 
-const getQueryRecipe = async (req, res) => {
+const getRecipeByQuery = async (req, res) => {
   const { name } = req.query;
   try {
     const allRecipes = await getAllRecipes();
@@ -21,4 +21,4 @@ const getQueryRecipe = async (req, res) => {
   }
 };
 
-module.exports = { getQueryRecipe };
+module.exports = { getRecipeByQuery };

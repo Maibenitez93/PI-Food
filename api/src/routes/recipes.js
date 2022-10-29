@@ -3,38 +3,11 @@ const router = express.Router();
 const { Recipe, TypeDiet } = require('../db.js');
 const axios = require('axios');
 const { API_KEY } = process.env;
+const { validateRecipe, createRecipe } = require('../controllers/postRecipe-controller')
 
 
 //middleware
-const validateRecipe = (req, res, next) => {
-  
-  const {
-    title,
-    summary,
-    healthScore,
-    instructions,
-    dishTypes,
-    image,
-    diets,
-  } = req.body;
 
-  if(!title || !summary) { 
-    return res.json({msg: 'Title and summary are required'})
-  }
-
-  if (
-    typeof title !== "string" ||
-    typeof summary !== "string" ||
-    typeof healthScore !== "number" ||
-    typeof instructions !== "string" ||
-    typeof dishTypes !== "object" ||
-    typeof image !== "string" ||
-    typeof diets !== "object" 
-  ) {
-    return res.json({ msg: "Invalid data" });
-  }
-  next();
-};
 /* GET recipes listing. */
 
 const getApiData = async () => {
@@ -52,6 +25,7 @@ const getApiData = async () => {
           diets: e.diets.map(e => e),
       }
   });
+  //console.log(apiInfo);
   return apiInfo; 
 };
 
@@ -105,63 +79,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", validateRecipe, async (req, res) => {
+router.post("/", validateRecipe, createRecipe);
 
-  const {
-    title,
-    summary,
-    healthScore,
-    instructions,
-    dishTypes,
-    image,
-    diets,
-  } = req.body;
 
-  try {
-  const getAllInfo = await getAllRecipes();
 
-  const existRecipe = getAllInfo.find(
-    (e) => e.title.toLowerCase() === title.toLowerCase()
-  );
-
-  if (existRecipe) {
-    return res.json({ msg: "Recipe already exist" });
-  }
-
-  const recipeCreated = await Recipe.create({
-    title,
-    summary,
-    healthScore,
-    instructions,
-    dishTypes,
-    image,
-  });
-
-  const dietsDb = await TypeDiet.findAll({
-    where: {
-      name: diets,
-    },
-  });
-
-  await recipeCreated.addTypeDiets(dietsDb);
-  return res.json("Recipe created successfully");
-
-  } catch(err) {
-    return res.json(err);
-  }
-});
-
-router.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const allRecipes = await getAllRecipes();
-
-  if(id) {
-    const recipeId = allRecipes.find((e) => e.id == id);
-  
-    recipeId
-    ? res.status.json(recipeId)
-    : res.json("Recipe not found");
-  }
-});
 
 module.exports = router;

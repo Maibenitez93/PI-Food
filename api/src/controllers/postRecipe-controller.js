@@ -27,19 +27,20 @@ const validateRecipe = async (req, res, next) => {
         return res.json({ msg: "Recipe already exist" });
       }
     }
-  
+
     if (
       typeof title !== "string" ||
       typeof summary !== "string" ||
-      typeof healthScore !== "number" ||
       typeof instructions !== "string" ||
       typeof dishTypes !== "object" ||
       typeof image !== "string" ||
-      typeof diets !== "object" 
-    ) {
-      return res.status(400).json({ msg: "Invalid data" });
-    }
+      typeof diets !== "object"
+    )
+      return res.status(400).json({ msg: "will only allow letters" });
+    else if (typeof healthScore !== "number")
+      return res.status(400).json({ msg: "will only allow numbers" });
 
+    next();
   };
 
   const createRecipe = async (req, res) => {
@@ -55,7 +56,6 @@ const validateRecipe = async (req, res, next) => {
 
   
     try {
-      validateRecipe()
   
       const recipeCreated = await Recipe.create({
         title,

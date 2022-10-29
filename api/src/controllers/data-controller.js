@@ -1,5 +1,5 @@
-const { API_KEY } = process.env;
 const axios = require('axios');
+const { API_KEY } = process.env;
 const { Recipe, TypeDiet } = require('../db.js');
 
 const getApiData = async () => {

@@ -1,10 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const { Op } = require('sequelize');
 const { Recipe, TypeDiet } = require('../db.js');
 const axios = require('axios');
 const { API_KEY } = process.env;
 
+
+//middleware
+const validateRecipe = (req, res, next) => {
+  
+  const {
+    title,
+    summary,
+    healthScore,
+    instructions,
+    dishTypes,
+    image,
+    diets,
+  } = req.body;
+
+  if(!title || !summary) { 
+    return res.json({msg: 'Title and summary are required'})
+  }
+
+  if (
+    typeof title !== "string" ||
+    typeof summary !== "string" ||
+    typeof healthScore !== "number" ||
+    typeof instructions !== "string" ||
+    typeof dishTypes !== "object" ||
+    typeof image !== "string" ||
+    typeof diets !== "object" 
+  ) {
+    return res.json({ msg: "Invalid data" });
+  }
+  next();
+};
 /* GET recipes listing. */
 
 const getApiData = async () => {
@@ -13,7 +43,7 @@ const getApiData = async () => {
   const apiInfo = await apiUrl.data.results.map(e => {
       return {
           id: e.id,
-          name: e.title,
+          title: e.title,
           dishTypes: e.dishTypes.map(e => e),
           summary: e.summary,
           healthScore: e.healthScore,
@@ -75,7 +105,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", validateRecipe, async (req, res) => {
 
   const {
     title,
@@ -86,10 +116,16 @@ router.post("/", async (req, res) => {
     image,
     diets,
   } = req.body;
-  console.log(req.body)
 
-  if(!title || !summary) { 
-    return res.json({msg: 'Title and summary are required'})
+  try {
+  const getAllInfo = await getAllRecipes();
+
+  const existRecipe = getAllInfo.find(
+    (e) => e.title.toLowerCase() === title.toLowerCase()
+  );
+
+  if (existRecipe) {
+    return res.json({ msg: "Recipe already exist" });
   }
 
   const recipeCreated = await Recipe.create({
@@ -108,23 +144,13 @@ router.post("/", async (req, res) => {
   });
 
   await recipeCreated.addTypeDiets(dietsDb);
-  res.json("Recipe created successfully");
-});
-// router.post('/', async (req, res) => {
-//     res.send('Post new recipes');
-// });
-module.exports = router;
+  return res.json("Recipe created successfully");
 
-/*
-GET /recipes/{idReceta}:
-Obtener el detalle de una receta en particular
-Debe traer solo los datos pedidos en la ruta de detalle de receta
-[ ] Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta)
-[ ] Resumen del plato
-[ ] Nivel de "comida saludable" (health score)
-[ ] Paso a paso
-Incluir los tipos de dieta asociados
-*/
+  } catch(err) {
+    return res.json(err);
+  }
+});
+
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const allRecipes = await getAllRecipes();
@@ -133,8 +159,9 @@ router.get("/:id", async (req, res) => {
     const recipeId = allRecipes.find((e) => e.id == id);
   
     recipeId
-    ? res.status(200).send(recipeId)
-    : res.status(404).send("Recipe not found");
+    ? res.status.json(recipeId)
+    : res.json("Recipe not found");
   }
 });
 
+module.exports = router;

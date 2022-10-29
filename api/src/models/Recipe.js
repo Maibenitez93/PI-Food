@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: "composite_unique",
+        unique: true,
         validate: {
           notNull: {
             args: true,
@@ -42,7 +42,6 @@ module.exports = (sequelize) => {
       },
       healthScore: {
         type: DataTypes.INTEGER,
-        unique: "composite_unique",
         validate: {
           isInt: {
             args: true,

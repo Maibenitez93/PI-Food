@@ -7,13 +7,11 @@ const { validateRecipe, createRecipe } = require('../controllers/postRecipe-cont
 const { getRecipeByQuery } = require('../controllers/queryRecipe-controller');
 const { getRecipeById } = require('../controllers/idRecipe-controller');
 const { getAllRecipes } = require('../controllers/data-controller');
+
 router.get('/', getRecipeByQuery);
 
-router.get("/:id",getRecipeById);
+router.get("/:id",getRecipeById );
 
 router.post("/", validateRecipe, createRecipe);
-
-
-
 
 module.exports = router;

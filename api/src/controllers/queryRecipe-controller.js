@@ -17,7 +17,7 @@ const getRecipeByQuery = async (req, res) => {
       return res.status(200).send(allRecipes);
     }
   } catch (error) {
-    return res.status(400).json({ err: err });
+    return res.status(400).json({ err: error });
   }
 };
 

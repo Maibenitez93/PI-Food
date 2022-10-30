@@ -6,7 +6,7 @@ const { API_KEY } = process.env;
 const { validateRecipe, createRecipe } = require('../controllers/postRecipe-controller');
 const { getRecipeByQuery } = require('../controllers/queryRecipe-controller');
 const { getRecipeById } = require('../controllers/idRecipe-controller');
-const { getAllRecipes } = require('../controllers/data-controller');
+
 
 router.get('/', getRecipeByQuery);
 

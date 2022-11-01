@@ -11,7 +11,6 @@ import "./Landing.css";
             <button>START</button>
           </Link>
         </div>
-        
       </div>
     );
   }

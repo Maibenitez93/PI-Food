@@ -4,11 +4,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRecipes } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card.js';
+import Paginate from '../Paginate/Paginate.js';
 
 function Home() {
 
   const dispatch = useDispatch();
   const allRecipes = useSelector(state => state.recipes);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recipesPerPage, setRecipesPerPage] = useState(9);
+  const indexOfLastRecipe = currentPage * recipesPerPage;
+  const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
+  const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     dispatch(getRecipes());
@@ -55,7 +63,8 @@ function Home() {
           <option value='db'>Base de datos</option>
           <option value='api'>Api</option>
         </select>
-        {allRecipes?.map((recipe) => {
+
+        {currentRecipes?.map((recipe) => {
           return (
             <Card
               key={recipe.id}
@@ -65,6 +74,8 @@ function Home() {
             />
           );
          })}
+
+         <Paginate recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paginate={paginate}/>
       </div>
     </div>
   )

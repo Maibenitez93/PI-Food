@@ -12,7 +12,7 @@ function Home() {
   const allRecipes = useSelector(state => state.recipes);
   
   const [orden, setOrden] = useState('');
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage, setRecipesPerPage] = useState(9);
   const indexOfLastRecipe = currentPage * recipesPerPage;
@@ -61,7 +61,7 @@ function Home() {
       <br/>
       {/* filtros */}
       <div>
-        <select>
+        <select onChange={e => handleOrderByName(e)}>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
         </select> {' '}

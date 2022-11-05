@@ -2,8 +2,6 @@ const axios = require('axios');
 const { API_KEY } = process.env;
 const { Recipe, TypeDiet } = require('../db.js');
 
-let apiRecipes = [];
-
 const getApiData = async () => {
 
   const apiUrl = await axios.get(
@@ -25,9 +23,7 @@ const getApiData = async () => {
     };
   });
 
-  apiRecipes.push(apiInfo);
-  
-  return apiRecipes;
+  return apiInfo;
 };
 
 
@@ -46,9 +42,9 @@ const getDbData = async () => {
 };
 
 const getAllRecipes = async () => {
-  await getApiData();
+  const apiInfo = await getApiData();
   const dbInfo = await getDbData();
-  const allInfo = apiRecipes.flat().concat(dbInfo);
+  const allInfo = apiInfo.concat(dbInfo);
   return allInfo;
 };
 

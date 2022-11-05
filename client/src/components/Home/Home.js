@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecipes, filterRecipesByDiet, filterCreated, orderByName } from '../../redux/actions';
+import { getRecipes, getTypesOfDiet, filterRecipesByDiet, filterCreated, orderByName } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card.js';
 import Paginate from '../Paginate/Paginate.js';
@@ -10,6 +10,7 @@ function Home() {
 
   const dispatch = useDispatch();
   const allRecipes = useSelector(state => state.recipes);
+  const diets = useSelector((state) => state.diets);
   
   const [orden, setOrden] = useState('');
 
@@ -22,6 +23,10 @@ function Home() {
 
   useEffect(() => {
     dispatch(getRecipes());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getTypesOfDiet());
   }, [dispatch]);
 
  
@@ -38,6 +43,7 @@ function Home() {
 
   //filtrar por creadas
   function handleFilterCreated(e) {
+    e.preventDefault();
     dispatch(filterCreated(e.target.value)); // dispatching the action
   }
 
@@ -67,16 +73,11 @@ function Home() {
         </select> {' '}
         <select onChange={e => handleFilterRecipes(e)}>
           <option value='All'>All</option>
-          <option value='glueten free'>Glueten free</option>
-          <option value='ketogenic'>Ketogenic</option>
-          <option value='vegetarian'>Vegetarian</option>
-          <option value='lacto ovo vegetarian'>Lacto ovo vegetarian</option>
-          <option value='vegan'>Vegan</option>
-          <option value='pescatarian'>Pescatarian</option>
-          <option value='paleolithic'>Paleolithic</option>
-          <option value='primal'>Primal</option>
-          <option value='whole'>Whole</option>
-          <option value='dairy free'>Dairy free</option>
+          {diets.map((d) => (
+            <option value={d.name} key={d.id}>
+              {d.name}
+            </option>
+          ))}
         </select> {' '}
         <select onChange={e => handleFilterCreated(e)}>
           <option value='all'>All</option>

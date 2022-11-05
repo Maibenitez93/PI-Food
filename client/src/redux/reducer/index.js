@@ -1,8 +1,9 @@
-import { GET_RECIPES, FILTER_BY_DIET, FILTER_CREATED, ORDER_BY_NAME } from '../actiones-types';
+import { GET_RECIPES, GET_TYPES_OF_DIET, FILTER_BY_DIET, FILTER_CREATED, ORDER_BY_NAME } from '../actiones-types';
 
 const initialState = { 
     recipes: [],
-    allRecipes: []
+    allRecipes: [],
+    diets: []
 }
 
 function rootReducer(state = initialState, action) {
@@ -13,14 +14,18 @@ function rootReducer(state = initialState, action) {
         recipes: action.payload,
         allRecipes: action.payload
       }
+    case GET_TYPES_OF_DIET:
+      return {
+          ...state,
+          diets: action.payload,
+      };
+
     case FILTER_BY_DIET :
       const allRecipes = state.allRecipes;
       const filteredRecipes =
         action.payload === "All"
           ? allRecipes
-          : allRecipes.filter((recipe) =>
-              recipe.diets.includes(action.payload)
-            );
+          : allRecipes.filter((recipe) => recipe.diets.includes(action.payload));
       return {
         ...state,
         recipes: filteredRecipes,

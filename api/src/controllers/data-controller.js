@@ -2,7 +2,10 @@ const axios = require('axios');
 const { API_KEY } = process.env;
 const { Recipe, TypeDiet } = require('../db.js');
 
+let apiRecipes = [];
+
 const getApiData = async () => {
+
   const apiUrl = await axios.get(
     `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=100&addRecipeInformation=true`
   );
@@ -21,8 +24,12 @@ const getApiData = async () => {
       diets: e.diets.map((e) => e),
     };
   });
-  return apiInfo;
+
+  apiRecipes.push(apiInfo);
+  
+  return apiRecipes;
 };
+
 
 const getDbData = async () => {
   const dbInfo = await Recipe.findAll({
@@ -39,9 +46,9 @@ const getDbData = async () => {
 };
 
 const getAllRecipes = async () => {
-  const apiInfo = await getApiData();
+  await getApiData();
   const dbInfo = await getDbData();
-  const allInfo = apiInfo.concat(dbInfo);
+  const allInfo = apiRecipes.flat().concat(dbInfo);
   return allInfo;
 };
 

@@ -5,18 +5,7 @@ module.exports = (sequelize) => {
       "TypeDiet",
       {
         name: {
-          type: DataTypes.ENUM([
-            "gluten free",
-            "ketogenic",
-            "vegetarian",
-            "lacto ovo vegetarian",
-            "vegan",
-            "pescatarian",
-            "paleolithic",
-            "primal",
-            "whole 30",
-            "dairy free",
-          ]),
+          type: DataTypes.TEXT,
           allowNull: false
         },
       },

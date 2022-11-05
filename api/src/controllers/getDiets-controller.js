@@ -5,7 +5,7 @@ const { API_KEY } = process.env;
 const getDiets = async (req, res) => {
   try {
     const dietsApi = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&number=30&addRecipeInformation=true`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
     );
     const diets = await dietsApi.data.results
       .map((e) => e.diets)
@@ -19,6 +19,8 @@ const getDiets = async (req, res) => {
       });
     });
     const dietsDb = await TypeDiet.findAll();
+   
+    console.log(dietsDb);
     res.send(dietsDb);
   } catch (error) {
     return res.status(400).json({ err: err });

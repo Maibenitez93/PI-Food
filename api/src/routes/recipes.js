@@ -8,10 +8,9 @@ const { getRecipeByQuery } = require('../controllers/queryRecipe-controller');
 const { getRecipeById } = require('../controllers/idRecipe-controller');
 
 
-router.get('/', getRecipeByQuery);
-
-router.get("/:id",getRecipeById );
-
-router.post("/", validateRecipe, createRecipe);
+router
+    .get('/', getRecipeByQuery)
+    .get("/:id",getRecipeById )
+    .post("/", validateRecipe, createRecipe);
 
 module.exports = router;

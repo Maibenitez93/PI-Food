@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { GET_RECIPES, GET_TYPES_OF_DIET, FILTER_BY_DIET, FILTER_CREATED, ORDER_BY_NAME } from '../actiones-types';
+import {
+  GET_RECIPES,
+  GET_TYPES_OF_DIET,
+  GET_RECIPES_BY_NAME,
+  POST_RECIPES,
+  FILTER_BY_DIET,
+  FILTER_CREATED,
+  ORDER_BY_NAME,
+} from "../actiones-types";
 
 export function getRecipes() {
     return async function (dispatch) {
@@ -23,6 +31,32 @@ export function getTypesOfDiet() {
             });
         } catch (error) {
         console.log(error);
+        }
+    };
+}
+
+export function getRecipeByName(name) {
+    return async function (dispatch) {
+        try {
+            return await axios.get(`http://localhost:3001/recipes?name=${name}`)
+            .then(res => {
+                dispatch({ type: GET_RECIPES_BY_NAME, payload: res.data })
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+}
+
+export function postRecipe(payload) {
+    return async function (dispatch) {
+        try {
+            return await axios.post('http://localhost:3001/recipe', payload)
+            .then(res => {
+                dispatch({ type: POST_RECIPES, payload: res.data })
+            });
+        } catch (error) {
+            console.log(error);
         }
     };
 }

@@ -5,6 +5,7 @@ import { getRecipes, getTypesOfDiet, filterRecipesByDiet, filterCreated, orderBy
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card.js';
 import Paginate from '../Paginate/Paginate.js';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Home() {
 
@@ -65,6 +66,7 @@ function Home() {
       </button>
       <br/>
       <br/>
+      <SearchBar/>
       {/* filtros */}
       <div>
         <select onChange={e => handleOrderByName(e)}>
@@ -91,12 +93,13 @@ function Home() {
               key={recipe.id}
               name={recipe.title}
               diets={recipe.diets.slice(0, 3).join(', ')}
-              image={recipe.image}
+              image={recipe.image ? recipe.image : <image src='../../../../cooking.png' alt='cooking' />}
             />
           );
          })}
 
          <Paginate recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paginate={paginate}/>
+         
       </div>
     </div>
   )

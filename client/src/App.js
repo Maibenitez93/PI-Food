@@ -2,7 +2,8 @@ import React from "react";
 import { Route } from "react-router-dom";
 import  Landing  from "./components/Landing/Landing";
 import Home from "./components/Home/Home";
-import RecipeCreate from "./components/RecipeCreate/RecipeCreate";
+//import RecipeCreate from "./components/RecipeCreate/RecipeCreate";
+import RecipeForm from "./components/RecipeCreate/RecipeForm";
 import './App.css';
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
       <Route exact path='/' component={Landing}/>
       <Route exact path='/home' component={Home}/>
-      <Route exact path='/recipe' component={RecipeCreate}/>
+      <Route exact path='/recipe' component={RecipeForm}/>
     </div>
   );
 }

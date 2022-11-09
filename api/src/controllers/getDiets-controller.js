@@ -20,10 +20,10 @@ const getDiets = async (req, res) => {
     });
     const dietsDb = await TypeDiet.findAll();
    
-    console.log(dietsDb);
+    
     res.send(dietsDb);
   } catch (error) {
-    return res.status(400).json({ err: err });
+    return res.status(400).json({ error: error });
   }
 };
 

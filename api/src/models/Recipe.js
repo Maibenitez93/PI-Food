@@ -25,8 +25,8 @@ module.exports = (sequelize) => {
             msg: "Title must be only letters",
           },
           len: {
-            args: [3, 255],
-            msg: "Title must be between 3 and 255 characters",
+            args: [3, 80],
+            msg: "Title must be between 3 and 80 characters",
           },
         },
       },
@@ -37,6 +37,10 @@ module.exports = (sequelize) => {
           notNull: {
             args: true,
             msg: "Summary is required",
+          },
+          len: {
+            args: [3, 255],
+            msg: "Summary must be between 3 and 255 characters",
           },
         },
       },

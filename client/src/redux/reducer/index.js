@@ -6,12 +6,14 @@ import {
   FILTER_CREATED,
   ORDER_BY_NAME,
   POST_RECIPES,
+  GET_DETAIL
 } from "../actiones-types";
 
 const initialState = {
   recipes: [],
   allRecipes: [],
   diets: [],
+  detail: {},
 };
 
 function rootReducer(state = initialState, action) {
@@ -86,6 +88,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         recipes: order,
+      };
+    case GET_DETAIL:
+      return {
+        ...state,
+        detail: action.payload,
       };
 
     default:

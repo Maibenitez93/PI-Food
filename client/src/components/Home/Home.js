@@ -58,7 +58,7 @@ function Home() {
   return (
     <div>
       <h1>RECETAS</h1>
-      <Link to="/recipe">Create Recipe</Link>
+      <Link to="/recipe/create">Create Recipe</Link>
       <br/>
       <br/>
       <button onClick={e => {handleClick(e)} }>
@@ -93,7 +93,7 @@ function Home() {
               key={recipe.id}
               name={recipe.title}
               diets={recipe.diets.slice(0, 3).join(', ')}
-              image={recipe.image ? recipe.image : <image src='../../../../cooking.png' alt='cooking' />}
+              image={recipe.image ? recipe.image : <image src='../../../../cooking.png' alt='recipe' />}
             />
           );
          })}

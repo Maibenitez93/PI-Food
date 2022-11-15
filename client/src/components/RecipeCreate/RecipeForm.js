@@ -111,7 +111,7 @@ export default function RecipeForm() {
             <div className="overSelect"></div>
           </div>
           <div id="checkboxes">
-            <label for="one">
+            <label>
               <input
                 type="checkbox"
                 name="side dish"
@@ -120,11 +120,11 @@ export default function RecipeForm() {
               />
               side dish
             </label>
-            <label for="two">
+            <label>
               <input type="checkbox" name="lunch" value="lunch" id="two" />
               lunch
             </label>
-            <label for="three">
+            <label>
               <input
                 type="checkbox"
                 name="main course"
@@ -133,11 +133,11 @@ export default function RecipeForm() {
               />
               main course
             </label>
-            <label for="four">
+            <label>
               <input type="checkbox" name="dinner" value="dinner" id="four" />
               dinner
             </label>
-            <label for="five">
+            <label>
               <input
                 type="checkbox"
                 name="morning meal"
@@ -146,11 +146,11 @@ export default function RecipeForm() {
               />
               morning meal
             </label>
-            <label for="six">
+            <label>
               <input type="checkbox" name="brunch" value="brunch" id="six" />
               brunch
             </label>
-            <label for="seven">
+            <label>
               <input
                 type="checkbox"
                 name="breakfast"
@@ -159,7 +159,7 @@ export default function RecipeForm() {
               />
               breakfast
             </label>
-            <label for="eight">
+            <label>
               <input type="checkbox" name="soup" value="soup" id="eight" />
               soup
             </label>

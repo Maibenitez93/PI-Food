@@ -9,6 +9,7 @@ const ORDER_BY_NAME = 'ORDER_BY_NAME';
 const ORDER_BY_SCORE = 'ORDER_BY_SCORE';
 const GET_DETAIL = 'GET_DETAIL';
 
+
 module.exports = {
     GET_RECIPES,
     GET_TYPES_OF_DIET,
@@ -19,5 +20,5 @@ module.exports = {
     FILTER_CREATED,
     ORDER_BY_NAME,
     ORDER_BY_SCORE,
-    GET_DETAIL
+    GET_DETAIL,
 }

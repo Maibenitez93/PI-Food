@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRecipes, getTypesOfDiet, filterRecipesByDiet, filterCreated, orderByName } from '../../redux/actions';
+import { getRecipes, getTypesOfDiet, filterRecipesByDiet, filterCreated, orderByName, orderByScore } from '../../redux/actions';
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card.js';
 import Paginate from '../Paginate/Paginate.js';
@@ -24,10 +24,6 @@ function Home() {
 
   useEffect(() => {
     dispatch(getRecipes());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getTypesOfDiet());
   }, [dispatch]);
 
  
@@ -55,10 +51,17 @@ function Home() {
     setOrden(e.target.value);
   }
 
+  function handleOrderByScore(e) {
+    e.preventDefault();
+    dispatch(orderByScore(e.target.value)); // dispatching the action
+    setCurrentPage(1);
+    setOrden(e.target.value);
+  }
+
   return (
     <div>
       <h1>RECETAS</h1>
-      <Link to="/recipe/create">Create Recipe</Link>
+      <Link to="/recipes/create">Create Recipe</Link>
       <br/>
       <br/>
       <button onClick={e => {handleClick(e)} }>
@@ -72,6 +75,11 @@ function Home() {
         <select onChange={e => handleOrderByName(e)}>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
+        </select> {' '}
+        <select onChange={e => handleOrderByScore(e)}>
+          <option value="all">All</option>
+          <option value="asc">Highest Score</option>
+          <option value="desc">Lowest Score</option>
         </select> {' '}
         <select onChange={e => handleFilterRecipes(e)}>
           <option value='All'>All</option>
@@ -89,11 +97,17 @@ function Home() {
 
         {currentRecipes?.map((recipe) => {
           return (
+            console.log(recipe),
             <Card
               key={recipe.id}
+              id={recipe.id}
               name={recipe.title}
-              diets={recipe.diets.slice(0, 3).join(', ')}
+              // diets={recipe.diets.slice(0, 3).join(', ')}
+              diets={
+                recipe.createDb ? recipe.TypeDiets?.slice(0, 3).join(', ') : recipe.diets?.slice(0, 3).join(', ')
+              }
               image={recipe.image ? recipe.image : <image src='../../../../cooking.png' alt='recipe' />}
+              score={recipe.healthScore}
             />
           );
          })}

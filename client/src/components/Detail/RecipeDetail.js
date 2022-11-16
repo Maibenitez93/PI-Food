@@ -7,9 +7,10 @@ export default function RecipeDetail(props) {
 
     const dispatch = useDispatch();
     const detail = useSelector(state => state.detail);
-    console.log(detail)
+  
+    console.log(detail);
     const { id } = useParams();
-
+    console.log(id);
     useEffect(() => {
         dispatch(getDetail(id));
     }, [dispatch, id]);

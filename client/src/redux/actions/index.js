@@ -54,7 +54,7 @@ export function getRecipeByName(name) {
 export function postRecipe(payload) {
     return async function (dispatch) {
         try {
-            return await axios.post('http://localhost:3001/recipes', payload)
+            return await axios.post('http://localhost:3001/recipes/create', payload)
             .then(res => {
                 dispatch({ type: POST_RECIPES, payload: res.data })
             });

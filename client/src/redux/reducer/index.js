@@ -5,6 +5,7 @@ import {
   FILTER_BY_DIET,
   FILTER_CREATED,
   ORDER_BY_NAME,
+  ORDER_BY_SCORE,
   POST_RECIPES,
   GET_DETAIL
 } from "../actiones-types";
@@ -39,6 +40,7 @@ function rootReducer(state = initialState, action) {
     case POST_RECIPES:
       return {
         ...state,
+        allRecipes: action.payload,
       }
     case FILTER_BY_DIET:
       const allRecipes = state.allRecipes;
@@ -46,7 +48,7 @@ function rootReducer(state = initialState, action) {
         action.payload === "All"
           ? allRecipes
           : allRecipes.filter((recipe) =>
-              recipe.diets.includes(action.payload)
+              recipe?.diets?.includes(action.payload)
             );
       return {
         ...state,
@@ -89,11 +91,36 @@ function rootReducer(state = initialState, action) {
         ...state,
         recipes: order,
       };
-    case GET_DETAIL:
+      case GET_DETAIL:
+        return {
+          ...state,
+          detail: action.payload,
+        };
+    case ORDER_BY_SCORE:
+      let orderScore =  
+        action.payload === "desc"
+          ? state.recipes.sort((a, b) => {
+              if (a.healthScore > b.healthScore) {
+                return -1;
+              }
+              if (b.healthScore > a.healthScore) {
+                return 1;
+              }
+              return 0;
+            })
+          : state.recipes.sort((a, b) => {
+              if (a.healthScore > b.healthScore) {
+                return 1;
+              }
+              if (b.healthScore > a.healthScore) {
+                return -1;
+              }
+              return 0;
+            });
       return {
         ...state,
-        detail: action.payload,
-      };
+        recipes: action.payload === 'all' ? state.allRecipes : orderScore,
+      }
 
     default:
       return state;

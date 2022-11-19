@@ -23,7 +23,7 @@ export default function RecipeDetail(props) {
         <h4>Dish Types: {detail.dishTypes}</h4>
         <h4>Diets: {detail.diets}</h4>
         <h4>Summary: {detail.summary}</h4>
-        <p>Steps: {detail.instructions.map(e => 
+        <p>Steps: {detail.instructions?.map(e => 
             <ol>{e}</ol>
         )}</p>
     </div>

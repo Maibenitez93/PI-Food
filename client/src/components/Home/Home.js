@@ -61,7 +61,7 @@ function Home() {
   return (
     <div>
       <h1>RECETAS</h1>
-      <Link to="/recipes/create">Create Recipe</Link>
+      <Link to="/home/create">Create Recipe</Link>
       <br/>
       <br/>
       <button onClick={e => {handleClick(e)} }>
@@ -97,12 +97,10 @@ function Home() {
 
         {currentRecipes?.map((recipe) => {
           return (
-            console.log(recipe),
             <Card
               key={recipe.id}
               id={recipe.id}
               name={recipe.title}
-              // diets={recipe.diets.slice(0, 3).join(', ')}
               diets={
                 recipe.createDb ? recipe.TypeDiets?.slice(0, 3).join(', ') : recipe.diets?.slice(0, 3).join(', ')
               }

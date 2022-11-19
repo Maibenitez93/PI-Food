@@ -1,74 +1,49 @@
-.landing {
-    /*margin: 0;*/
+.container {
     width: 100%;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /*position: absolute;
-    top: 0;
-    bottom: 0;*/
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6,1fr);
     background-image: url('../../shared/images/cook-2364221_1920.jpg');
     background-position: center;
     background-size: cover;
-  }
-
-  
-  
-  .landing h1 {
-    /*position:absolute;
-    top: 100px;
-    left: 34%;*/
-    color: rgba(245, 244, 239, 0.498);
-    font-family: 'Helvetica';
-    font-size: 65px;
-    
-  }
-  /*.landing h1:hover {
-    -webkit-transform:scale(1.1);
-    transform:scale(1.1);
-}*/
-  
-  .landing h4 {
-    position:absolute;
-    /*top:220px;
-    left: 38%;*/
-    color: rgba(250, 249, 249, 0.842);
-    font-size: 20px;
-    font-family: 'Helvetica';
-    
-  }
-  
-  
-  
-  .landing button {
-    border: solid 2px transparent;
-    border-radius: 100px;
-    /*position: relative;
-    top: 280px;
-    left: 42%;*/
-    width: 150px;
-    height: 50px;
-    background-color: #ff9505;
-    transition: background-color 0.25s, color 0.25s;
-    cursor: pointer;
-    font-size: 30px;
-    font-family: 'Arial';
-    color: rgb(62, 61, 61);
-  }
-  .landing button:hover {
-    -webkit-transform:scale(1.1);
-    transform:scale(1.1);
 }
-  .landing button:hover {
-    background-color: #ffffff9f;
-    color: rgb(83, 82, 81);
-  }
-  
-  
-  
-  .btnLan {
-    text-decoration: rgb(93, 91, 91);
 
+.item {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 4;
+}
+
+h1 {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    font-size: 5rem;
+    color: white;
+    text-align: center;
+    margin-top: 0;
+}
+
+.container button{
+    grid-row-start: 3;
+    grid-row-end: 4;
+    font-size: 20px;
+    color: white;
+    background-color: #A7C957;
+    letter-spacing: 2.5px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 80px;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.32);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(9.5px);
+    -webkit-backdrop-filter: blur(9.5px);
+    transform: translateY(-7px);
   }
+

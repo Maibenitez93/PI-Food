@@ -4,11 +4,11 @@ import "./Landing.css";
 
  function Landing() {
     return (
-      <div className="landing">
-        <h1>FOOD BOOK</h1>
-        <div>
+      <div className="container">
+        <div className="item">
+          <h1>RECIPE BOOK</h1>
           <Link to="./home" className="btnLan">
-            <button>START</button>
+            <button>HOME</button>
           </Link>
         </div>
       </div>

@@ -36,6 +36,7 @@ h1 {
     border-radius: 10px;
     padding: 10px 80px;
     cursor: pointer;
+    margin-left: 6rem;
 }
 
 button:hover {

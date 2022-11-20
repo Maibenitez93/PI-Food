@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Card from '../Card/Card.js';
 import Paginate from '../Paginate/Paginate.js';
 import SearchBar from '../SearchBar/SearchBar';
+import './Home.css'
 
 function Home() {
 
@@ -59,8 +60,7 @@ function Home() {
   }
 
   return (
-    <div>
-      <h1>RECETAS</h1>
+    <div className='homeContainer'>
       <Link to="/home/create">Create Recipe</Link>
       <br/>
       <br/>

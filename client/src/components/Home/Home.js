@@ -60,41 +60,43 @@ function Home() {
   }
 
   return (
-    <div className='homeContainer'>
-      <Link to="/home/create">Create Recipe</Link>
-      <br/>
-      <br/>
-      <button onClick={e => {handleClick(e)} }>
-        Reset
-      </button>
-      <br/>
-      <br/>
-      <SearchBar/>
+    <div className="homeContainer">
+      <div className="nav-home">
+        <h2>RECIPE BOOK</h2>
+        <SearchBar />
+        <Link to="/home/create">Create Recipe</Link>
+        <button
+          onClick={(e) => {
+            handleClick(e);
+          }}
+        >
+          Reset
+        </button>
+      </div>
       {/* filtros */}
-      <div>
-        <select onChange={e => handleOrderByName(e)}>
+      <div className='filtros'>
+        <select onChange={(e) => handleOrderByName(e)}>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
-        </select> {' '}
-        <select onChange={e => handleOrderByScore(e)}>
+        </select>{" "}
+        <select onChange={(e) => handleOrderByScore(e)}>
           <option value="all">All</option>
           <option value="asc">Highest Score</option>
           <option value="desc">Lowest Score</option>
-        </select> {' '}
-        <select onChange={e => handleFilterRecipes(e)}>
-          <option value='All'>All</option>
+        </select>{" "}
+        <select onChange={(e) => handleFilterRecipes(e)}>
+          <option value="All">All</option>
           {diets.map((d) => (
             <option value={d.name} key={d.id}>
               {d.name}
             </option>
           ))}
-        </select> {' '}
-        <select onChange={e => handleFilterCreated(e)}>
-          <option value='all'>All</option>
-          <option value='db'>Data Base</option>
-          <option value='api'>Api</option>
+        </select>{" "}
+        <select onChange={(e) => handleFilterCreated(e)}>
+          <option value="all">All</option>
+          <option value="db">Data Base</option>
+          <option value="api">Api</option>
         </select>
-
         {currentRecipes?.map((recipe) => {
           return (
             <Card
@@ -102,19 +104,29 @@ function Home() {
               id={recipe.id}
               name={recipe.title}
               diets={
-                recipe.createDb ? recipe.TypeDiets?.slice(0, 3).join(', ') : recipe.diets?.slice(0, 3).join(', ')
+                recipe.createDb
+                  ? recipe.TypeDiets?.slice(0, 3).join(", ")
+                  : recipe.diets?.slice(0, 3).join(", ")
               }
-              image={recipe.image ? recipe.image : <image src='../../../../cooking.png' alt='recipe' />}
+              image={
+                recipe.image ? (
+                  recipe.image
+                ) : (
+                  <image src="../../../../cooking.png" alt="recipe" />
+                )
+              }
               score={recipe.healthScore}
             />
           );
-         })}
-
-         <Paginate recipesPerPage={recipesPerPage} allRecipes={allRecipes.length} paginate={paginate}/>
-         
+        })}
       </div>
+        <Paginate
+          recipesPerPage={recipesPerPage}
+          allRecipes={allRecipes.length}
+          paginate={paginate}
+        />
     </div>
-  )
+  );
 }
 
 export default Home;

@@ -57,7 +57,7 @@ p{
 }
 
 .input-title input {
-    padding-inline: 15.5rem;
+    width: 100%;
 }
 
 
@@ -72,7 +72,7 @@ p{
 }
 
 .input-summary input {
-    padding-inline: 15.5rem;
+    width: 100%;
     padding-bottom: 2rem;
 }
 
@@ -107,7 +107,7 @@ p{
 }
 
 .container-instrtuctions input{
-    padding-inline: 15.5rem;
+    width: 100%;
     padding-bottom: 5rem;
 }
 
@@ -168,7 +168,7 @@ p{
 }
 
 .container-image input {
-    padding-inline: 15.5rem;
+    width: 100%;
 }
 
 .container-submit{

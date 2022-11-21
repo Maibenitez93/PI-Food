@@ -40,7 +40,6 @@ function rootReducer(state = initialState, action) {
     case POST_RECIPES:
       return {
         ...state,
-        allRecipes: action.payload,
       }
     case FILTER_BY_DIET:
       const allRecipes = state.allRecipes;

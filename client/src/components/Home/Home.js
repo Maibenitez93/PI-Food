@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Card from '../Card/Card.js';
 import Paginate from '../Paginate/Paginate.js';
 import SearchBar from '../SearchBar/SearchBar';
+import Loading from '../Loading/Loading';
 import './Home.css'
 
 function Home() {
@@ -120,7 +121,7 @@ function Home() {
         </button>
       </div>
       <div className="container-card">
-        {currentRecipes?.map((recipe) => {
+        {!currentRecipes ? <Loading/> : currentRecipes.map((recipe) => {
           return (
             <Card
               key={recipe.id}
@@ -141,7 +142,7 @@ function Home() {
               score={recipe.healthScore}
             />
           );
-        })}
+        }) }
       </div>
       <div className='container_pag'>
         <Paginate

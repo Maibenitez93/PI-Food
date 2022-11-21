@@ -19,7 +19,7 @@ const getApiData = async () => {
         .map((e) => e.steps.map((e) => e.step))
         .flat(),
       image: e.image,
-      diets: e.diets.map((e) => e),
+      diets: e.diets.map((e) => e + ', '),
     };
   });
 

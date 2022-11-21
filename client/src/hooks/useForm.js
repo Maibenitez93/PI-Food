@@ -18,6 +18,28 @@ export function useForm (initialForm, validateForm) {
     });
   };
 
+  const handleCheckbox = (e) => {
+    const { checked, value } = e.target;
+    if(checked) {
+      setForm({
+        ...form,
+        dishTypes: [...form.dishTypes, value]
+      });
+
+    }
+  }
+
+  const handleCheck = (e) => {
+    const { checked, value } = e.target;
+    if(checked) {
+      setForm({
+        ...form,
+        diets: [...form.diets, value]
+      });
+
+    }
+  }
+
   const handleBlur = (e) => {
     handleChange(e);
     setErrors(validateForm(form));
@@ -43,6 +65,8 @@ export function useForm (initialForm, validateForm) {
         errors,
         handleChange,
         handleBlur,
-        handleSubmit
+        handleSubmit,
+        handleCheckbox,
+        handleCheck 
     }
 }

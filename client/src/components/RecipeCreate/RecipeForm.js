@@ -39,8 +39,6 @@ const validationsForm = (form) => {
 
   if (!form.healthScore) {
     errors.healthScore = "HealthScore is required";
-  } else if (!Number.isInteger(form.healthScore)) {
-    errors.healthScore = "HealthScore must be an integer";
   } else if (form.healthScore < 1 || form.healthScore > 100) {
     errors.healthScore = "HealthScore must be between 1 and 100";
   }
@@ -51,17 +49,19 @@ const validationsForm = (form) => {
     errors.instructions = "Instructions must be between 3 and 1000 characters";
   }
 
-  if (form.image) {
-    if (!form.image.includes("http")) {
-      errors.image = "Image must be a valid URL";
-    }
+  if(form.dishTypes.length === 0) {
+    errors.dishTypes = "DishTypes is required";
+  }
+
+  if(form.diets.length === 0) {
+    errors.diets = "Diets is required";
   }
 
   return errors;
 };
 
 export default function RecipeForm() {
-  const { form, errors, handleChange, handleBlur, handleSubmit } = useForm(
+  const { form, errors, handleChange, handleBlur, handleSubmit, handleCheckbox, handleCheck  } = useForm(
     initialForm,
     validationsForm
   );
@@ -77,7 +77,7 @@ export default function RecipeForm() {
     <div className="container-form">
       <div className="form">
         <h3>CREATE RECIPE</h3>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e) => handleSubmit(e)}>
           <div className="form-group">
             <div className="input-title">
               <label>
@@ -106,9 +106,7 @@ export default function RecipeForm() {
                 name="summary"
                 onBlur={(e) => handleBlur(e)}
                 value={form.summary}
-                onChange={(e) => handleChange(e)}
-                required
-              />
+                onChange={(e) => handleChange(e)}              />
             </div>
             {errors.summary && <p>{errors.summary}</p>}
             <div className="multiselect">
@@ -123,6 +121,8 @@ export default function RecipeForm() {
                     name="side dish"
                     value="side dish"
                     id="one"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Side dish
                 </label>
@@ -134,6 +134,8 @@ export default function RecipeForm() {
                     name="lunch"
                     value="lunch"
                     id="two"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Lunch
                 </label>
@@ -145,6 +147,8 @@ export default function RecipeForm() {
                     name="main course"
                     value="main course"
                     id="three"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Main course
                 </label>
@@ -156,6 +160,8 @@ export default function RecipeForm() {
                     name="dinner"
                     value="dinner"
                     id="four"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Dinner
                 </label>
@@ -167,6 +173,8 @@ export default function RecipeForm() {
                     name="morning meal"
                     value="morning meal"
                     id="five"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Morning meal
                 </label>
@@ -178,6 +186,8 @@ export default function RecipeForm() {
                     name="brunch"
                     value="brunch"
                     id="six"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Brunch
                 </label>
@@ -189,6 +199,8 @@ export default function RecipeForm() {
                     name="breakfast"
                     value="breakfast"
                     id="seven"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Breakfast
                 </label>
@@ -200,6 +212,8 @@ export default function RecipeForm() {
                     name="soup"
                     value="soup"
                     id="eight"
+                    onBlur={(e) => handleBlur(e)}
+                    onChange={(e) => handleCheckbox(e)}
                   />
                   Soup
                 </label>
@@ -217,7 +231,6 @@ export default function RecipeForm() {
                 value={form.instructions}
                 onBlur={(e) => handleBlur(e)}
                 onChange={(e) => handleChange(e)}
-                required
               />
             </div>
             {errors.instructions && <p>{errors.instructions}</p>}
@@ -234,6 +247,8 @@ export default function RecipeForm() {
                       value={diet.name}
                       className="input"
                       type="checkbox"
+                      onBlur={(e) => handleBlur(e)}
+                      onChange={(e) => handleCheck(e)}
                     ></input>
                     {diet.name}
                   </label>
@@ -247,12 +262,11 @@ export default function RecipeForm() {
               </label>
               <input
                 className="input"
-                type="number"
+                type="text"
                 name="healthScore"
                 value={form.healthScore}
                 onBlur={(e) => handleBlur(e)}
                 onChange={(e) => handleChange(e)}
-                required
               />
             </div>
             {errors.healthScore && <p>{errors.healthScore}</p>}

@@ -98,7 +98,7 @@ function rootReducer(state = initialState, action) {
         };
     case ORDER_BY_SCORE:
       let orderScore =  
-        action.payload === "desc"
+        action.payload === "asc"
           ? state.recipes.sort((a, b) => {
               if (a.healthScore > b.healthScore) {
                 return -1;

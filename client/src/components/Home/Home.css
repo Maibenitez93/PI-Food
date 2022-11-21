@@ -16,7 +16,7 @@
     grid-row-end: 2;
     background-color: #A7C957;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 0 2rem;
 }
@@ -42,7 +42,7 @@ h2{
     grid-row-start: 2;
     grid-row-end: 3;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     gap: 50px;
     align-items: center;
     width: 10rem;

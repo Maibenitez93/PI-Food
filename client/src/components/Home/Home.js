@@ -64,39 +64,61 @@ function Home() {
       <div className="nav-home">
         <h2>RECIPE BOOK</h2>
         <SearchBar />
-        <Link to="/home/create">Create Recipe</Link>
+        <div className="create">
+          <Link to="/home/create" style={{ color: "white" }}>
+            Create Recipe
+          </Link>
+        </div>
+      </div>
+      {/* filtros */}
+      <div className="filtros">
+        <div className="filter_AZ">
+          <label>ORDER BY A-Z</label>
+          <select onChange={(e) => handleOrderByName(e)}>
+            <option>Choose an option</option>
+            <option value="A-Z">A-Z</option>
+            <option value="Z-A">Z-A</option>
+          </select>
+        </div>
+        <div className="filter_score">
+          <label>ORDER BY SCORE</label>
+          <select onChange={(e) => handleOrderByScore(e)}>
+            <option>Choose an option</option>
+            <option value="all">All</option>
+            <option value="asc">Highest Score</option>
+            <option value="desc">Lowest Score</option>
+          </select>
+        </div>
+        <div className="filter_diet">
+          <label>FILTER BY DIET</label>
+          <select onChange={(e) => handleFilterRecipes(e)}>
+            <option>Choose an option</option>
+            <option value="All">All</option>
+            {diets.map((d) => (
+              <option value={d.name} key={d.id}>
+                {d.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="filter_created">
+          <label>FILTER BY CREATED</label>
+          <select onChange={(e) => handleFilterCreated(e)}>
+            <option>Choose an option</option>
+            <option value="all">All</option>
+            <option value="db">Data Base</option>
+            <option value="api">Api</option>
+          </select>
+        </div>
         <button
+          className="reset"
           onClick={(e) => {
             handleClick(e);
           }}
         >
-          Reset
+          RESET
         </button>
       </div>
-      {/* filtros */}
-      <div className='filtros'>
-        <select onChange={(e) => handleOrderByName(e)}>
-          <option value="A-Z">A-Z</option>
-          <option value="Z-A">Z-A</option>
-        </select>{" "}
-        <select onChange={(e) => handleOrderByScore(e)}>
-          <option value="all">All</option>
-          <option value="asc">Highest Score</option>
-          <option value="desc">Lowest Score</option>
-        </select>{" "}
-        <select onChange={(e) => handleFilterRecipes(e)}>
-          <option value="All">All</option>
-          {diets.map((d) => (
-            <option value={d.name} key={d.id}>
-              {d.name}
-            </option>
-          ))}
-        </select>{" "}
-        <select onChange={(e) => handleFilterCreated(e)}>
-          <option value="all">All</option>
-          <option value="db">Data Base</option>
-          <option value="api">Api</option>
-        </select>
         {currentRecipes?.map((recipe) => {
           return (
             <Card
@@ -119,12 +141,11 @@ function Home() {
             />
           );
         })}
-      </div>
-        <Paginate
-          recipesPerPage={recipesPerPage}
-          allRecipes={allRecipes.length}
-          paginate={paginate}
-        />
+      <Paginate
+        recipesPerPage={recipesPerPage}
+        allRecipes={allRecipes.length}
+        paginate={paginate}
+      />
     </div>
   );
 }

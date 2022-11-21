@@ -119,7 +119,7 @@ function Home() {
           RESET
         </button>
       </div>
-      {/* <div className="container-card">
+      <div className="container-card">
         {currentRecipes?.map((recipe) => {
           return (
             <Card
@@ -142,7 +142,7 @@ function Home() {
             />
           );
         })}
-      </div> */}
+      </div>
       <div className='container_pag'>
         <Paginate
           recipesPerPage={recipesPerPage}

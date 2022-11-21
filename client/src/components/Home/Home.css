@@ -243,12 +243,13 @@ h2{
     grid-column-start: 2;
     grid-column-end: 12;
     grid-row-start: 3;
-    grid-row-end: 12;
+    grid-row-end: 11;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
     flex-wrap: wrap;
     width: 10rem;
+    gap:10px 60px;
     font-family: 'Roboto', sans-serif;
     background-attachment: fixed;
     width: 100%;
@@ -259,7 +260,7 @@ h2{
 .container_pag{
     grid-column-start: 1;
     grid-column-end: 13;
-    grid-row-start: 12;
+    grid-row-start: 13;
     grid-row-end: 13;
     display: flex;
     justify-content: center;

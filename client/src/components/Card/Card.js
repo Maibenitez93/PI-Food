@@ -1,22 +1,29 @@
 import React from 'react';
-import './Card.css'
+import { Link } from 'react-router-dom';
+import './Card.css';
 
-function Card({ name, diets, image, score }) {
+function Card({ name, diets, image, score, id }) {
   return (
-    <div className='card'>
-          <h3>{name}</h3>
-      <div className='imgContainer'>
-          <img src={image} alt={name} width='200px' height='250px' />
+    <div className="card">
+      <div className="imgContainer">
+        <img src={image} alt={name} width="200px" height="250px" />
       </div>
-      <div className='itemCard'>
-        <h5 className='diets'>Type of Diet: {diets}</h5>
-        <h5>Score:</h5>
-        <i>{score}</i>
+      <div className="cardInfo">
+        <h3>{name}</h3>
       </div>
-     
-        
+      <div className="itemCard">
+        <p>{diets}</p>
+      </div>
+      <div className="item-score">
+        <p>Health Score: {score}</p>
+      </div>
+      <div className="btn">
+        <Link to={`/recipe/${id}`} style={{ textDecoration: 'none' }}>
+          <button className="btn">See more</button>
+        </Link>
+      </div>
     </div>
-  )
+  );
 };
 
 export default Card;

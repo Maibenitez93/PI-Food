@@ -3,7 +3,7 @@
     height: 100vh;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(12,3rem);
+    grid-template-rows: repeat(12);
     background-color: #F0F6E3;
     background-position: center center;
     background-size: cover;
@@ -52,6 +52,7 @@ h2{
     background-color: white;
     background-attachment: fixed;
     width: 100%;
+    padding: 0.3rem;
 }
 .filter_AZ{
     display: flex;

@@ -119,6 +119,7 @@ function Home() {
           RESET
         </button>
       </div>
+      {/* <div className="container-card">
         {currentRecipes?.map((recipe) => {
           return (
             <Card
@@ -141,11 +142,14 @@ function Home() {
             />
           );
         })}
-      <Paginate
-        recipesPerPage={recipesPerPage}
-        allRecipes={allRecipes.length}
-        paginate={paginate}
-      />
+      </div> */}
+      <div className='container_pag'>
+        <Paginate
+          recipesPerPage={recipesPerPage}
+          allRecipes={allRecipes.length}
+          paginate={paginate}
+        />
+      </div>
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import './Paginate.css'
 
 function Paginate({recipesPerPage, allRecipes, paginate}) {
 
@@ -14,11 +15,13 @@ function Paginate({recipesPerPage, allRecipes, paginate}) {
         <ul className='pagination'>
             {pageNumbers?.map(number => {
                 return (
-                    <li key={number} className='page-item'>
+                    <div key={number} className='page-item'>
                         <a onClick={() => paginate(number)} className='page-link'>
+                         <button className='page-btn'>
                             {number}
+                         </button>
                         </a>
-                    </li>
+                    </div>
                 )
             })}
         </ul>

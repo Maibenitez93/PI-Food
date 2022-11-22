@@ -1,59 +1,47 @@
 import React from 'react';
-import { useForm } from '../../hooks/useForm';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getTypesOfDiet } from '../../redux/actions';
+import { Link, useHistory } from 'react-router-dom';
+import { getTypesOfDiet, postRecipe } from '../../redux/actions';
 import './RecipeForm.css'
 
-const initialForm = {
-  title: "",
-  summary: "",
-  dishTypes: [],
-  healthScore: 0,
-  instructions: "",
-  diets: [],
-  image: "",
-};
 
-const validationsForm = (form) => {
+const validationsForm = (input) => {
   let errors = {};
 
   let regexString = /^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$/;
 
-  if (!form.title.trim()) {
+  if (!input.title.trim()) {
     errors.title = "Title is required";
-  } else if (!regexString.test(form.title.trim())) {
+  } else if (!regexString.test(input.title.trim())) {
     errors.title = "Title must be only letters";
-  } else if (form.title.length > 80 || form.title.length < 3) {
+  } else if (input.title.length > 80 || input.title.length < 3) {
     errors.title = "Title must be between 3 and 80 characters";
   }
 
-  if (!form.summary.trim()) {
+  if (!input.summary.trim()) {
     errors.summary = "Summary is required";
-  } else if (!regexString.test(form.summary.trim())) {
+  } else if (!regexString.test(input.summary.trim())) {
     errors.title = "Summary must be only letters";
-  } else if (form.summary.length > 255 || form.summary.length < 3) {
+  } else if (input.summary.length > 255 || input.summary.length < 3) {
     errors.summary = "Summary must be between 3 and 255 characters";
   }
 
-  if (!form.healthScore) {
+  if (!input.healthScore) {
     errors.healthScore = "HealthScore is required";
-  } else if (form.healthScore < 1 || form.healthScore > 100) {
+  } else if (!Number.isInteger(Number(input.healthScore))) {
+    errors.healthScore = "HealthScore must be an integer";
+  } else if (input.healthScore < 1 || input.healthScore > 100) {
     errors.healthScore = "HealthScore must be between 1 and 100";
   }
 
-  if (!form.instructions.trim()) {
+  if (!input.instructions.trim()) {
     errors.instructions = "Instructions is required";
-  } else if (form.instructions.length < 3 || form.instructions.length > 1000) {
+  } else if (input.instructions.length < 3 || input.instructions.length > 1000) {
     errors.instructions = "Instructions must be between 3 and 1000 characters";
   }
 
-  if(form.dishTypes.length === 0) {
-    errors.dishTypes = "DishTypes is required";
-  }
-
-  if(form.diets.length === 0) {
+  if(input.diets.length === 0) {
     errors.diets = "Diets is required";
   }
 
@@ -61,17 +49,72 @@ const validationsForm = (form) => {
 };
 
 export default function RecipeForm() {
-  const { form, errors, handleChange, handleBlur, handleSubmit, handleCheckbox, handleCheck  } = useForm(
-    initialForm,
-    validationsForm
-  );
-
   const dispatch = useDispatch();
   const diets = useSelector((state) => state.diets);
+  const history = useHistory();
+
+  const [input, setInput] = useState({
+    title: "",
+    summary: "",
+    healthScore: 0,
+    instructions: "",
+    diets: [],
+    image: "",
+  });
+
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     dispatch(getTypesOfDiet());
   }, [dispatch]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log({name, value});
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const handleCheck = (e) => {
+    const { checked, value, name } = e.target;
+    if(checked) {
+      setInput({
+        ...input,
+        [name]: [...input.diets, value]
+      });
+
+    }
+  }
+
+  const handleBlur = (e) => {
+    handleChange(e);
+    setErrors(validationsForm(input));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(input);
+    dispatch(postRecipe(input));
+
+    setErrors(validationsForm(input));
+    
+    if (Object.keys(errors).length === 0) {
+      alert('Recipe created successfully');
+      setInput({
+        title: "",
+        summary: "",
+        healthScore: 0,
+        instructions: "",
+        diets: [],
+        image: "",
+      });
+      history.push('/home');
+    } else {
+      alert('Recipe not created');
+    }
+  };
 
   return (
     <div className="container-form">
@@ -89,7 +132,7 @@ export default function RecipeForm() {
                 type="text"
                 name="title"
                 onBlur={(e) => handleBlur(e)}
-                value={form.title}
+                value={input.title}
                 onChange={(e) => handleChange(e)}
               />
             </div>
@@ -105,120 +148,10 @@ export default function RecipeForm() {
                 type="text"
                 name="summary"
                 onBlur={(e) => handleBlur(e)}
-                value={form.summary}
+                value={input.summary}
                 onChange={(e) => handleChange(e)}              />
             </div>
             {errors.summary && <p>{errors.summary}</p>}
-            <div className="multiselect">
-              <span>
-                <b>DISH TYPES</b>
-              </span>
-              <div className="checkboxes">
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="side dish"
-                    value="side dish"
-                    id="one"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Side dish
-                </label>
-                <br />
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="lunch"
-                    value="lunch"
-                    id="two"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Lunch
-                </label>
-                <br />
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="main course"
-                    value="main course"
-                    id="three"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Main course
-                </label>
-                <br />
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="dinner"
-                    value="dinner"
-                    id="four"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Dinner
-                </label>
-                <br />
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="morning meal"
-                    value="morning meal"
-                    id="five"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Morning meal
-                </label>
-                <br />
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="brunch"
-                    value="brunch"
-                    id="six"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Brunch
-                </label>
-                <br />
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="breakfast"
-                    value="breakfast"
-                    id="seven"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Breakfast
-                </label>
-                <br />
-                <label>
-                  <input
-                    className="input"
-                    type="checkbox"
-                    name="soup"
-                    value="soup"
-                    id="eight"
-                    onBlur={(e) => handleBlur(e)}
-                    onChange={(e) => handleCheckbox(e)}
-                  />
-                  Soup
-                </label>
-              </div>
-            </div>
             <div className="container-instrtuctions">
               <label>
                 <b>INSTRUCTIONS</b>
@@ -228,7 +161,7 @@ export default function RecipeForm() {
                 className="input"
                 type="text"
                 name="instructions"
-                value={form.instructions}
+                value={input.instructions}
                 onBlur={(e) => handleBlur(e)}
                 onChange={(e) => handleChange(e)}
               />
@@ -240,10 +173,11 @@ export default function RecipeForm() {
               </span>
               <br />
               {diets.map((diet) => (
-                <div>
+                <div key={diet.id}>
                   <label>
                     <input
                       key={diet.id}
+                      name={'diets'}
                       value={diet.name}
                       className="input"
                       type="checkbox"
@@ -262,9 +196,9 @@ export default function RecipeForm() {
               </label>
               <input
                 className="input"
-                type="text"
+                type="number"
                 name="healthScore"
-                value={form.healthScore}
+                value={Number(input.healthScore)}
                 onBlur={(e) => handleBlur(e)}
                 onChange={(e) => handleChange(e)}
               />
@@ -279,13 +213,13 @@ export default function RecipeForm() {
                 type="text"
                 name="image"
                 onBlur={(e) => handleBlur(e)}
-                value={form.image}
+                value={input.image}
                 onChange={(e) => handleChange(e)}
               />
             </div>
             {errors.image && <p>{errors.image}</p>}
             <div className="container-submit">
-              <button type="submit" className="btn-create">
+              <button type="submit" className="btn-create"  >
                 <b>CREATE</b>
               </button>
               <Link to="/home">

@@ -28,6 +28,10 @@ function Home() {
     dispatch(getRecipes());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getTypesOfDiet());
+  },[dispatch]);
+
  
   //resetar el estado de la receta
   function handleClick(e) {
@@ -49,7 +53,7 @@ function Home() {
  function handleOrderByName(e) {
     e.preventDefault();
     dispatch(orderByName(e.target.value)); // dispatching the action
-    setCurrentPage(1);
+    setCurrentPage(1); // reset the page to 1
     setOrden(e.target.value);
   }
 
@@ -95,7 +99,7 @@ function Home() {
           <select onChange={(e) => handleFilterRecipes(e)}>
             <option>Choose an option</option>
             <option value="All">All</option>
-            {diets.map((d) => (
+            {diets && diets.map((d) => (
               <option value={d.name} key={d.id}>
                 {d.name}
               </option>
@@ -129,8 +133,8 @@ function Home() {
               name={recipe.title}
               diets={
                 recipe.createDb
-                  ? recipe.TypeDiets?.slice(0, 3).join(", ")
-                  : recipe.diets?.slice(0, 3).join(", ")
+                  ? recipe.TypeDiets?.slice(0, 3).join(" ")
+                  : recipe.diets?.slice(0, 3).join(" ")
               }
               image={
                 recipe.image ? (

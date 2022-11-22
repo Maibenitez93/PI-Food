@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import Card from '../Card/Card.js';
 import Paginate from '../Paginate/Paginate.js';
 import SearchBar from '../SearchBar/SearchBar';
-import Loading from '../Loading/Loading';
 import './Home.css'
 
 function Home() {
@@ -125,7 +124,7 @@ function Home() {
         </button>
       </div>
       <div className="container-card">
-        {!currentRecipes ? <Loading/> : currentRecipes.map((recipe) => {
+        {currentRecipes && currentRecipes.map((recipe) => {
           return (
             <Card
               key={recipe.id}
@@ -133,8 +132,8 @@ function Home() {
               name={recipe.title}
               diets={
                 recipe.createDb
-                  ? recipe.TypeDiets?.slice(0, 3).join(" ")
-                  : recipe.diets?.slice(0, 3).join(" ")
+                  ? recipe.TypeDiets
+                  : recipe.diets
               }
               image={
                 recipe.image ? (

@@ -70,7 +70,6 @@ export default function RecipeForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log({name, value});
     setInput({
       ...input,
       [name]: value,
@@ -95,7 +94,6 @@ export default function RecipeForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(input);
     dispatch(postRecipe(input));
 
     setErrors(validationsForm(input));

@@ -45,30 +45,13 @@ module.exports = (sequelize) => {
         },
       },
       healthScore: {
-        type: DataTypes.INTEGER,
-        validate: {
-          isInt: {
-            args: true,
-            msg: "Health score must be an integer",
-          },
-          min: {
-            args: 1,
-            msg: "Health score must be greater than or 1",
-          },
-          max: {
-            args: 100,
-            msg: "Health score must be less than or equal 100",
-          },
-        },
+        type: DataTypes.STRING,
       },
       instructions: {
         type: DataTypes.TEXT,
       },
       image: {
         type: DataTypes.STRING,
-      },
-      dishTypes: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
       },
       createdInDb: {
         type: DataTypes.BOOLEAN,

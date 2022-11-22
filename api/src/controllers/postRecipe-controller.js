@@ -9,9 +9,7 @@ const validateRecipe = async (req, res, next) => {
       summary,
       healthScore,
       instructions,
-      dishTypes,
       image,
-      diets,
     } = req.body;
   
     if(!title || !summary) { 
@@ -32,14 +30,10 @@ const validateRecipe = async (req, res, next) => {
       typeof title !== "string" ||
       typeof summary !== "string" ||
       typeof instructions !== "string" ||
-      typeof dishTypes !== "object" ||
-      typeof image !== "string" ||
-      typeof diets !== "object"
+      typeof image !== "string"
     )
       return res.status(400).json({ msg: "will only allow letters" });
-    else if (typeof healthScore !== "number")
-      return res.status(400).json({ msg: "will only allow numbers" });
-
+      
     next();
   };
 
@@ -49,7 +43,6 @@ const validateRecipe = async (req, res, next) => {
       summary,
       healthScore,
       instructions,
-      dishTypes,
       image,
       diets,
     } = req.body;
@@ -62,8 +55,7 @@ const validateRecipe = async (req, res, next) => {
         summary,
         healthScore,
         instructions,
-        dishTypes,
-        image,
+        image
       });
   
       const dietsDb = await TypeDiet.findAll({
